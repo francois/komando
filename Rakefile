@@ -13,6 +13,7 @@ begin
     gem.authors = ["François Beausoleil"]
     gem.add_development_dependency "bacon", ">= 0"
     gem.add_development_dependency "yard", ">= 0"
+    gem.add_development_dependency "bluecloth", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

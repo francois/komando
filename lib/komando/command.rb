@@ -11,12 +11,11 @@ module Komando
       end
     end
 
+    # @return Boolean true Always returns +true+, since exceptions indicate failure.
     def run!
       run_mandatory!
 
       steps = self.class.instance_variable_get("@best_effort_steps")
-      return true unless steps.kind_of?(Enumerable)
-
       steps.each do |name, block|
         begin
           instance_exec &block
@@ -24,6 +23,8 @@ module Komando
           Rails.logger.warn "Ignoring failed #{name} step in #{self.class}: #{e.class.name} - #{e.message}"
         end
       end
+
+      true
     end
 
     private
