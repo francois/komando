@@ -62,7 +62,7 @@ module Komando
       self.class.best_effort_steps.each do |name, block|
         begin
           instance_exec &block
-        rescue RuntimeError => e
+        rescue StandardError => e
           logger.warn "Ignoring failed #{name.inspect} step in #{self.class}: #{e.class.name} - #{e.message}"
         end
       end
