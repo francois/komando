@@ -1,4 +1,5 @@
-require 'rubygems'
+# coding: utf-8
+
 require 'rake'
 
 begin
