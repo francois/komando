@@ -82,4 +82,18 @@ namespace :rubies do
   task :default do
     sh "rvm use #{RUBIES.first}"
   end
+
+  namespace :gemset do
+    task :create do
+      RUBIES.each do |ruby|
+        sh "rvm use #{ruby} && rvm --force gemset create komando"
+      end
+    end
+
+    task :delete do
+      RUBIES.each do |ruby|
+        sh "rvm use #{ruby} && rvm --force gemset delete"
+      end
+    end
+  end
 end
