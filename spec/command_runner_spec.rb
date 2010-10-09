@@ -31,10 +31,15 @@ describe "A command with a failing mandatory step" do
       extend Komando::Command::Dsl
       include Komando::Command
 
-      attr_reader :ran
+      attr_reader :ran, :log
 
       mandatory_steps do
         raise "failure to run"
+      end
+
+      best_effort_step do
+        @log ||= []
+        @log << 1
       end
     end
   end
@@ -43,6 +48,17 @@ describe "A command with a failing mandatory step" do
     lambda do
       @command.new.run!
     end.should.raise(RuntimeError)
+  end
+
+  should "NOT run best effort blocks" do
+    command = @command.new
+    begin
+      command.run!
+    rescue StandardError => ignored
+      # NOP
+    end
+
+    command.log.should.be.nil?
   end
 
 end
