@@ -20,3 +20,5 @@ pkg
 doc
 
 ## PROJECT::SPECIFIC
+*.rbc
+.bundle

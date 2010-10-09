@@ -13,7 +13,9 @@ begin
     gem.authors = ["François Beausoleil"]
     gem.add_development_dependency "bacon", ">= 0"
     gem.add_development_dependency "yard", ">= 0"
-    gem.add_development_dependency "bluecloth", ">= 0"
+    # BlueCloth is "required" by yard, where it helps to format the docs, but is not really a required dependency.
+    # Use 1.9.2 to generate the docs.
+
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -51,5 +53,33 @@ begin
 rescue LoadError
   task :yardoc do
     abort "YARD is not available. In order to run yardoc, you must: sudo gem install yard"
+  end
+end
+
+RUBIES = %w(
+  1.9.2@komando
+  1.8.7@komando
+  ree@komando
+  jruby@komando
+  rbx@komando
+)
+
+def rvm(command)
+  sh "rvm #{RUBIES.join(",")} exec #{command}"
+end
+
+namespace :rubies do
+  namespace :bundle do
+    task :install do
+      rvm "bundle install"
+    end
+  end
+
+  task :spec do
+    rvm "rake spec"
+  end
+
+  task :default do
+    sh "rvm use #{RUBIES.first}"
   end
 end

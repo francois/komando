@@ -1,0 +1,25 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    bacon (1.1.0)
+    bluecloth (2.0.9)
+    gemcutter (0.6.1)
+    git (1.2.5)
+    jeweler (1.4.0)
+      gemcutter (>= 0.1.0)
+      git (>= 1.2.5)
+      rubyforge (>= 2.0.0)
+    json_pure (1.4.6)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
+    yard (0.6.1)
+
+PLATFORMS
+  java
+  ruby
+
+DEPENDENCIES
+  bacon
+  bluecloth
+  jeweler
+  yard

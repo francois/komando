@@ -13,6 +13,7 @@ simple change in one area of the code can have a huge impact somewhere else. Ins
 [Unintented Consequences: The Pitfalls of ActiveRecord Callbacks][2] and
 [Crazy, Heretical, and Awesome: The Way I Write Rails Apps][3].
 
+
 Examples
 --------
 
@@ -108,6 +109,7 @@ Examples
 
     end
 
+
 Note on Patches/Pull Requests
 -----------------------------
 
@@ -118,6 +120,19 @@ Note on Patches/Pull Requests
 * Commit, do not mess with rakefile, version, or history.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
+
+
+Compatibility
+-------------
+
+Komando is known to run on the following Ruby implementations (rvm version specifiers):
+
+* jruby-1.5.3 [ x86_64-java ]
+* rbx-1.1.0-20100923 [ ]
+* ree-1.8.7-2010.02 [ x86_64 ]
+* ruby-1.8.7-p302 [ x86_64 ]
+* ruby-1.9.2-p0 [ x86_64 ]
+
 
 Copyright
 ---------
