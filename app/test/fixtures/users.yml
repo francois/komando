@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+joe:
+  username: joe
+  email: joe@teksol.info
+  password: joespassword
+  state: active
+
+invited_jack:
+  username: jack
+  email: jack@teksol.info
+  password: jackspassword
+  state: invited
