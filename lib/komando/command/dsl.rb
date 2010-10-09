@@ -4,12 +4,19 @@ module Komando
     # The Komando DSL. Extend your command classes with this module to start using
     # Komando in your application.
     #
+    # It is recommended you do not implement #initialize in your commands. If you do,
+    # you *must* call super or your parameters will not be available as instance variables.
+    #
     # @example
     #
     #   require "komando/command/dsl"
     #
     #   class CreateUserCommand
     #     extend Komando::Command::Dsl
+    #
+    #     def initialize(*args)
+    #       super # MUST call, or all hell will break loose
+    #     end
     #
     #     mandatory_steps do
     #       generate_records
