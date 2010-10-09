@@ -13,7 +13,9 @@ module Komando
         end
       end
 
-      attr_reader :best_effort_steps
+      def best_effort_steps
+        @best_effort_steps ||= Array.new
+      end
 
       def best_effort_step(name=nil, &block)
         @best_effort_steps ||= Array.new
