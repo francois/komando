@@ -13,4 +13,6 @@ module Komando
     end
   end
 
+  autoload :Command, "komando/command"
+
 end

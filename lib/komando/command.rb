@@ -1,6 +1,8 @@
 module Komando
   module Command
 
+    autoload :Dsl, "komando/command/dsl"
+
     # Instantiates and runs this command.
     #
     # @param (see #initialize)
