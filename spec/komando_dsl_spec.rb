@@ -5,7 +5,6 @@ describe "A command with no step declarations" do
   before do
     @command = Class.new do
       extend Komando::Command::Dsl
-      include Komando::Command
     end
   end
 
@@ -16,10 +15,6 @@ describe "A command with no step declarations" do
   should "have no best effort blocks" do
     @command.best_effort_steps.should == []
   end
-
-  should "raise an exception when running" do
-    lambda { @command.new.run! }.should.raise(Komando::MissingMandatoryStepsError)
-  end
 end
 
 describe "A command with one mandatory step block and no best effort blocks" do
@@ -27,7 +22,6 @@ describe "A command with one mandatory step block and no best effort blocks" do
   before do
     @command = Class.new do
       extend Komando::Command::Dsl
-      include Komando::Command
 
       mandatory_steps do
       end
