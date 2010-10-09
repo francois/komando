@@ -34,7 +34,7 @@ describe "A command with one mandatory step block and no best effort blocks" do
 
   should "NOT allow declaring a second one" do
     lambda do
-      @command.class_exec do
+      @command.class_eval do
         mandatory_steps do
         end
       end
