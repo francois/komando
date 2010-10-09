@@ -16,8 +16,8 @@ simple change in one area of the code can have a huge impact somewhere else. Ins
 Examples
 --------
 
-    require "komodo/command"
-    require "komodo/active_record"
+    require "komando/command"
+    require "komando/active_record"
 
     class AdUpdateCommand
       include Komando::Command
@@ -45,7 +45,7 @@ Examples
 
       # The #transaction block can be used to root your transation differently.
       # The default #transaction block simply yields - no transactions will be
-      # processed. The komodo-active_record gem will root your transactions
+      # processed. The komando-active_record gem will root your transactions
       # against ActiveRecord::Base#transaction.
       transaction do
         AdUnit.transaction do
