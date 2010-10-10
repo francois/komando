@@ -15,8 +15,8 @@ class InvitationsController < ApplicationController
   end
 
   def show
-    @user = User.invited.with_token(params[:id]).first
-    raise ActiveRecord::RecordNotFound unless @user
+    # Use the Command as a Presenter
+    @user = ConfirmUserInvitationCommand.new(:token => params[:id]).user
     render :action => :confirm
   end
 
