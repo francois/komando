@@ -8,8 +8,8 @@ describe "A command with no step declarations" do
     end
   end
 
-  should "have no mandatory step block" do
-    @command.mandatory_steps.should.be.nil?
+  should "have no mandatory step blocks" do
+    @command.mandatory_steps.should == []
   end
 
   should "have no best effort blocks" do
@@ -23,7 +23,7 @@ describe "A command with one mandatory step block and no best effort blocks" do
     @command = Class.new do
       extend Komando::Command::Dsl
 
-      mandatory_steps do
+      mandatory_step do
       end
     end
   end
@@ -32,13 +32,13 @@ describe "A command with one mandatory step block and no best effort blocks" do
     @command.mandatory_steps.should.not.be.nil?
   end
 
-  should "NOT allow declaring a second one" do
+  should "allow declaring a second mandatory step" do
     lambda do
       @command.class_eval do
-        mandatory_steps do
+        mandatory_step do
         end
       end
-    end.should.raise(Komando::MultipleMandatoryStepDeclarationsError)
+    end.should.not.raise
   end
 
 end

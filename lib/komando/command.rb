@@ -54,9 +54,11 @@ module Komando
 
     # Runs and raises
     def run_mandatory!
-      mandatory = self.class.mandatory_steps
-      raise Komando::MissingMandatoryStepsError unless mandatory
-      instance_exec(&mandatory)
+      steps = self.class.mandatory_steps
+      raise Komando::MissingMandatoryStepsError if steps.empty?
+      steps.each do |step|
+        instance_exec(&step)
+      end
     end
 
     # Runs and logs

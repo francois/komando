@@ -9,7 +9,7 @@ describe "A command with a mandatory step" do
 
       attr_reader :ran
 
-      mandatory_steps do
+      mandatory_step do
         @ran = true
       end
     end
@@ -33,7 +33,7 @@ describe "A command with a failing mandatory step" do
 
       attr_reader :ran, :log
 
-      mandatory_steps do
+      mandatory_step do
         raise "failure to run"
       end
 
@@ -87,7 +87,7 @@ describe "A command with a best effort step" do
 
       attr_reader :ran
 
-      mandatory_steps do
+      mandatory_step do
         # NOP
       end
 
@@ -105,6 +105,53 @@ describe "A command with a best effort step" do
 
 end
 
+describe "A command with two mandatory steps" do
+
+  before do
+    @command = Class.new do
+      extend Komando::Command::Dsl
+      include Komando::Command
+
+      attr_accessor :raise_in_first, :raise_in_second
+      attr_reader :log
+
+      def initialize(*args)
+        @log = []
+        super
+      end
+
+      mandatory_step do
+        raise "asked to raise" if raise_in_first
+        log << 1
+      end
+
+      mandatory_step do
+        raise "asked to raise" if raise_in_second
+        log << 2
+      end
+    end
+  end
+
+  should "run both blocks in order" do
+    command = @command.new
+    command.run!
+
+    command.log.should == [1, 2]
+  end
+
+  should "NOT run the 2nd block when the 1st one raises" do
+    command = @command.new
+    command.raise_in_first = true
+
+    lambda do
+      command.run!
+    end.should.raise
+
+    command.log.should == []
+  end
+
+end
+
 describe "A command with two best effort steps" do
 
   before do
@@ -114,7 +161,7 @@ describe "A command with two best effort steps" do
 
       attr_reader :log
 
-      mandatory_steps do
+      mandatory_step do
         # NOP
       end
 
@@ -151,7 +198,7 @@ describe "A command with two best effort steps, where the 1st will fail" do
 
       attr_reader :log
 
-      mandatory_steps do
+      mandatory_step do
         # NOP
       end
 
@@ -189,7 +236,7 @@ describe "A command with two best effort steps, where the 1st will fail" do
     messages = command.logger.messages
 
     messages.length.should == 1
-    messages.first.should.match /^ignoring failed.*first.*RuntimeError.*failure to run/im
+    messages.first.should.match /ignoring failed.*first.*RuntimeError.*failure to run/im
   end
 
 end

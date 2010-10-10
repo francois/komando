@@ -14,39 +14,38 @@ module Komando
     #   class CreateUserCommand
     #     extend Komando::Command::Dsl
     #
+    #     # If you must override #initialize, make sure you call super,
+    #     # or your instance variables won't be assigned.
     #     def initialize(*args)
     #       super # MUST call, or all hell will break loose
     #     end
     #
-    #     mandatory_steps do
-    #       generate_records
-    #       generate_audit_log
-    #     end
-    #
-    #     private
-    #
-    #     def generate_records
+    #     mandatory_step "generate records" do
     #       # TODO
     #     end
     #
-    #     def generate_audit_log
+    #     mandatory_step "generate audit log" do
     #       # TODO
     #     end
+    #
     #   end
     module Dsl
+
+      # Returns the list of mandatory steps
+      def mandatory_steps
+        @mandatory_steps ||= []
+      end
 
       # Declares a set of actions that must run to completion for this command to be deemed successful.
       # The declared actions may be anything: method calls or direct actions. Parameters are passed from the
       # environment as instance variables passed to the instance.
-      #
-      # @raise [MultipleMandatoryStepDeclarationsError] If this method is called multiple times with a block.
       #
       # @example
       #
       #   class CreateUserCommand
       #     extend Komando::Command::Dsl
       #
-      #     mandatory_steps do
+      #     mandatory_step do
       #       # Assuming an ActiveRecord-like User class exists
       #       User.create!(@attributes)
       #     end
@@ -54,20 +53,13 @@ module Komando
       #
       #   # Run the command with parameters gathered from the environment
       #   CreateUserCommand.new(:attributes => params[:user]).run!
-      def mandatory_steps(&block)
-        if block then
-          # Called as a setter
-          raise Komando::MultipleMandatoryStepDeclarationsError if @mandatory_steps
-          @mandatory_steps = block
-        else
-          # Called as a query
-          @mandatory_steps
-        end
+      def mandatory_step(name=nil, &block)
+        mandatory_steps << block
       end
 
       # Declares a new best effort step - one that will be executed, but will not stop processing.
       # If the block raises an exception, {Komando::Command#run!} will log and swallow the exception.
-      # Best effort stop blocks have access to the same environment as {#mandatory_steps} blocks -
+      # Best effort stop blocks have access to the same environment as {#mandatory_step} blocks -
       # they execute within the same instance. You can pass values from one block to the next by
       # using instance variables.
       #
@@ -76,7 +68,7 @@ module Komando
       #   class CreateUserCommand
       #     extend Komando::Command::Dsl
       #
-      #     mandatory_steps do
+      #     mandatory_step do
       #       @user = User.create!(@attributes)
       #     end
       #

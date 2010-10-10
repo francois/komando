@@ -20,7 +20,7 @@ describe "An active-record enabled command" do
 
       attr_reader :open_transactions
 
-      mandatory_steps do
+      mandatory_step do
         @open_transactions = ActiveRecord::Base.connection.open_transactions
       end
     end
