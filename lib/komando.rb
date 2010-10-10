@@ -15,4 +15,13 @@ module Komando
 
   autoload :Command, "komando/command"
 
+  def self.make_command(base)
+    base.send :include, Komando::Command
+    base.send :extend, Komando::Command::Dsl
+    if defined?(ActiveRecord) then
+      require "komando/persistence/active_record"
+      base.send :include, Komando::Persistence::ActiveRecord
+    end
+  end
+
 end
