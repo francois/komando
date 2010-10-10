@@ -55,6 +55,11 @@ module Komando
         end
       end
 
+      # Uses the same Logger instance as ActiveRecord.
+      def logger
+        ::ActiveRecord::Base.logger
+      end
+
     end
   end
 end
