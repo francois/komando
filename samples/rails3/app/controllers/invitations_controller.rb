@@ -15,8 +15,7 @@ class InvitationsController < ApplicationController
   end
 
   def show
-    # Use the Command as a Presenter
-    @user = ConfirmUserInvitationCommand.new(:token => params[:id]).user
+    @user = User.find_invited_by_token(@token)
     render :action => :confirm
   end
 

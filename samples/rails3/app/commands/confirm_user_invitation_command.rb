@@ -3,11 +3,7 @@ class ConfirmUserInvitationCommand
   Komando.make_command self
 
   def user
-    @user ||= begin
-                User.invited.with_token(@token).first.tap do |user|
-                  raise ActiveRecord::RecordNotFound if user.nil?
-                end
-              end
+    @user ||= User.find_invited_by_token(@token)
   end
 
   mandatory_steps do

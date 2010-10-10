@@ -20,6 +20,12 @@ class User < ActiveRecord::Base
     User.invited.create!(params)
   end
 
+  def self.find_invited_by_token!(token)
+    User.invited.with_token(@token).first.tap do |user|
+      raise ActiveRecord::RecordNotFound if user.nil?
+    end
+  end
+
   def activate!(params)
     self.attributes = params
     self.state = "active"
