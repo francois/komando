@@ -1,7 +1,8 @@
 class InvitationsController < ApplicationController
 
   def new
-    render
+    @user = User.new
+    render :signup
   end
 
   def create
@@ -10,20 +11,24 @@ class InvitationsController < ApplicationController
 
   rescue ActiveRecord::RecordInvalid => e
     @user = e.record
-    render :action => :new
+    render :action => :signup
   end
 
-  def edit
-    render
+  def show
+    @user = User.invited.with_token(params[:id]).first
+    raise ActiveRecord::RecordNotFound unless @user
+    render :action => :confirm
   end
 
   def update
-    ConfirmUserInvitationCommand.new(:attributes => params[:user], :redis => StatsRedis).run!
+    ConfirmUserInvitationCommand.new(:token      => params[:id],
+                                     :attributes => params[:user],
+                                     :redis      => StatsRedis).run!
     redirect_to root_url
 
   rescue ActiveRecord::RecordInvalid => e
     @user = e.record
-    render :action => :edit
+    render :action => :confirm
   end
 
   private

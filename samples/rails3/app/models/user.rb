@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   scope :with_token, lambda {|token| where(:token => token)}
 
-  validates :email, :presence => true
+  validates :email, :presence => true, :uniqueness => true
   validates :username, :password, :presence => true, :if => :active?
   validates :username, :uniqueness => true, :if => :active?
 
@@ -18,6 +18,12 @@ class User < ActiveRecord::Base
 
   def self.invite!(params)
     User.invited.create!(params)
+  end
+
+  def activate!(params)
+    self.attributes = params
+    self.state = "active"
+    save!
   end
 
   def invited?

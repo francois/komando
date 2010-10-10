@@ -1,0 +1,11 @@
+<h2>Sign Up</h2>
+<%= form_for @user, :url => invitations_path do |f| %>
+  <%= f.error_messages %>
+
+  <div class="row">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <%= submit_tag "Send Invitation Request" %>
+<% end %>
