@@ -5,8 +5,9 @@
 # URL to confirm their intent on signing up.
 class CreateUserCommand
 
-  include Komando::Command
-  extend Komando::Command::Dsl
+  Komando.make_command self
+
+  attr_reader :user
 
   # Exceptions raised from here will bubble up to the caller.
   mandatory_steps do
@@ -18,6 +19,10 @@ class CreateUserCommand
   # each. Failure to run one block won't stop the others from running.
   best_effort_step(:invitation_email) do
     UserMailer.invitation_email(@user).deliver
+  end
+
+  best_effort_step(:signup_stats) do
+    @redis.sadd("signup:#{Date.today.to_s(:db)}", @user.id)
   end
 
 end

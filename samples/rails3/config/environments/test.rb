@@ -32,4 +32,26 @@ App::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.action_mailer.default_url_options = {:host => "test.host"}
+
+  config.after_initialize do
+    class LoggingRedis
+      attr_reader :log
+
+      def initialize
+        clear!
+      end
+
+      def clear!
+        @log = []
+      end
+
+      def method_missing(selector, *args, &block)
+        @log << [selector, *args]
+      end
+    end
+
+    StatsRedis = LoggingRedis.new
+  end
 end

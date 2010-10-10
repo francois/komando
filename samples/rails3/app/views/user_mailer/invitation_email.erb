@@ -1,1 +1,5 @@
-Welcome, <%= @user.username %>!
+Welcome, <%= @user.email %>!
+
+Proceed with your signup at:
+
+  <%= invitation_url(@user, :token => @user.token) %>

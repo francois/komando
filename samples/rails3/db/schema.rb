@@ -16,11 +16,13 @@ ActiveRecord::Schema.define(:version => 20101009015548) do
     t.string   "username"
     t.string   "email"
     t.string   "password"
+    t.string   "token",      :limit => 40
     t.string   "state",      :limit => 12, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "users", ["token"], :name => "index_users_on_token", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
 end

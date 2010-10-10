@@ -7,8 +7,10 @@ gem 'thin'
 
 gem 'komando', :path => "/Users/francois/Projects/komando"
 
+gem 'redis'
+
 group :development, :test do
   gem 'interactive_editor'
 end
 
-# vim: set ft=ruby
+# vim: ft=ruby
