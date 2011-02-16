@@ -38,16 +38,19 @@ Examples
       # is determined by the fact that no exceptions are raised. The block's
       # return value is ignored.
       #
-      # #mandatory_steps are run within a single database transaction.
+      # All #mandatory_steps are run within a single database transaction.
       mandatory_steps do
         @ad.update_attributes!(@params)
-        @ad.campaign.active_ad_units_count = @ad.campaign.ad_units.active.count
+        @ad.campaign.update_attribute(:active_ad_units_count, @ad.campaign.ad_units.active.count)
       end
 
-      # The #transaction block can be used to root your transation differently.
+      # The #transaction block can be used to root your transaction differently.
       # The default #transaction block simply yields - no transactions will be
       # processed. The komando-active_record gem will root your transactions
       # against ActiveRecord::Base#transaction.
+      #
+      # This method is important if you have more than one database connection,
+      # where each model might open transactions against different databases.
       transaction do
         AdUnit.transaction do
           yield
@@ -78,11 +81,12 @@ Examples
       # other blocks will be attempted.
       #
       # #best_effort_step can document what it's supposed to do, enabling
-      # better logging.
+      # better logging. Either pass a String or Symbol, the latter of which will
+      # be #humanized.
       best_effort_step(:event_generation) do
 
         # Note the availability of a class-level method named #run, which simply does the obvious
-        # instantiate then call the instance-level #run.
+        # instantiation and call the instance-level #run.
         PlacementEventLoggerCommand.run(:actor => @placement.created_by, :subject => @placement)
 
       end
@@ -110,7 +114,7 @@ Examples
     end
 
 
-Note on Patches/Pull Requests
+Notes on Patches/Pull Requests
 -----------------------------
 
 * Fork the project.
