@@ -129,13 +129,12 @@ Notes on Patches/Pull Requests
 Compatibility
 -------------
 
-Komando is known to run on the following Ruby implementations (rvm version specifiers):
+Komando is known to pass it's specifications on the following Ruby implementations (rvm version specifiers):
 
-* jruby-1.5.3 [ x86_64-java ]
-* rbx-1.1.0-20100923 [ ]
-* ree-1.8.7-2010.02 [ x86_64 ]
-* ruby-1.8.7-p302 [ x86_64 ]
-* ruby-1.9.2-p0 [ x86_64 ]
+* jruby-1.5.6 [ x86_64-java ]
+* ree-1.8.7-2011.01 [ x86_64 ]
+* ruby-1.8.7-p330 [ x86_64 ]
+* ruby-1.9.2-p136 [ x86_64 ]
 
 
 Copyright

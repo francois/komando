@@ -61,7 +61,6 @@ RUBIES = %w(
   1.8.7@komando
   ree@komando
   jruby@komando
-  rbx@komando
 )
 
 def rvm(command)
@@ -71,8 +70,13 @@ end
 namespace :rubies do
   namespace :bundle do
     task :install do
+      rvm "gem install bundler"
       rvm "bundle install"
     end
+  end
+
+  task :version do
+    rvm "ruby --version"
   end
 
   task :spec do
