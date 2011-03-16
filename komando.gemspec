@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["François Beausoleil"]
-  s.date = %q{2010-10-08}
+  s.date = %q{2011-03-08}
   s.description = %q{Most web applications have a lot of before/after hooks that occur when working with objects: sending a welcome email on registration, incrementing/decrementing counter caches, trigger validation on remote web services. When implemented using callbacks, all these occur without the developer knowing about them. A simple change in one area of the code can have a huge impact somewhere else. Inspiration for this came from http://blog.teksol.info/2010/09/28/unintented-consequences-the-pitfalls-of-activerecord-callbacks.html and http://jamesgolick.com/2010/3/14/crazy-heretical-and-awesome-the-way-i-write-rails-apps.html}
   s.email = %q{francois@teksol.info}
   s.extra_rdoc_files = [
@@ -20,12 +20,26 @@ Gem::Specification.new do |s|
     ".document",
      ".gitignore",
      ".rvmrc",
+     "Gemfile",
      "LICENSE",
      "README.md",
      "Rakefile",
      "VERSION",
+     "komando.gemspec",
      "lib/komando.rb",
-     "spec/komando_spec.rb",
+     "lib/komando/command.rb",
+     "lib/komando/command/dsl.rb",
+     "lib/komando/persistence.rb",
+     "lib/komando/persistence/active_record.rb",
+     "lib/komando/version.rb",
+     "samples/rails3/.gitignore",
+     "samples/rails3/.rvmrc",
+     "samples/rails3/lib/tasks/.gitkeep",
+     "samples/rails3/public/stylesheets/.gitkeep",
+     "samples/rails3/vendor/plugins/.gitkeep",
+     "spec/active_record_integration_spec.rb",
+     "spec/command_runner_spec.rb",
+     "spec/dsl_spec.rb",
      "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/francois/komando}
@@ -34,7 +48,9 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Command-driven framework, especially suited for web applications}
   s.test_files = [
-    "spec/komando_spec.rb",
+    "spec/active_record_integration_spec.rb",
+     "spec/command_runner_spec.rb",
+     "spec/dsl_spec.rb",
      "spec/spec_helper.rb"
   ]
 
@@ -45,13 +61,19 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<bacon>, [">= 0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
+      s.add_development_dependency(%q<activerecord>, ["~> 2.3.8"])
+      s.add_development_dependency(%q<jeweler>, ["~> 1.4.0"])
     else
       s.add_dependency(%q<bacon>, [">= 0"])
       s.add_dependency(%q<yard>, [">= 0"])
+      s.add_dependency(%q<activerecord>, ["~> 2.3.8"])
+      s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
     end
   else
     s.add_dependency(%q<bacon>, [">= 0"])
     s.add_dependency(%q<yard>, [">= 0"])
+    s.add_dependency(%q<activerecord>, ["~> 2.3.8"])
+    s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
   end
 end
 

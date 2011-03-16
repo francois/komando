@@ -11,10 +11,18 @@ begin
     gem.email = "francois@teksol.info"
     gem.homepage = "http://github.com/francois/komando"
     gem.authors = ["François Beausoleil"]
+
+    # Don't bundle development code with the gem
+    gem.files -= FileList["samples/**/*"]
+
     gem.add_development_dependency "bacon", ">= 0"
     gem.add_development_dependency "yard", ">= 0"
-    # BlueCloth is "required" by yard, where it helps to format the docs, but is not really a required dependency.
+    gem.add_development_dependency "bluecloth", ">= 0"
+    # BlueCloth is "required" by yard, where it is used to format the docs, but is not really a required dependency.
     # Use 1.9.2 to generate the docs.
+
+    gem.add_development_dependency "activerecord", "~> 2.3.8"
+    gem.add_development_dependency "jeweler", "~> 1.4.0"
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
